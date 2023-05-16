@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Material freeway/wallpaperfreeway.png" type="Texture" id=1]
+[ext_resource path="res://Player1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ganha.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Main.gd" type="Script" id=5]
+[ext_resource path="res://Material freeway/sons/ganhou.wav" type="AudioStream" id=6]
+[ext_resource path="res://Material freeway/PressStart2P-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Material freeway/sons/tema.wav" type="AudioStream" id=8]
+[ext_resource path="res://Material freeway/sons/ponto.wav" type="AudioStream" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="ganha" parent="." instance=ExtResource( 3 )]
+position = Vector2( 638.66, 64 )
+gravity_scale = 0.0
+
+[node name="Player1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 320, 696 )
+
+[node name="Player2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 944, 696 )
+
+[node name="tempocarrorapido" type="Timer" parent="."]
+autostart = true
+
+[node name="tempocarrodevagar" type="Timer" parent="."]
+autostart = true
+
+[node name="tempocarrorapido2" type="Timer" parent="."]
+autostart = true
+
+[node name="tempocarrodevagar2" type="Timer" parent="."]
+autostart = true
+
+[node name="placar1" type="Label" parent="."]
+margin_left = 300.0
+margin_top = 10.0
+margin_right = 320.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="placar2" type="Label" parent="."]
+margin_left = 920.0
+margin_top = 10.0
+margin_right = 944.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="resultado" type="Label" parent="."]
+margin_top = 10.0
+margin_right = 1280.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 1 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ponto" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -18.0
+
+[node name="ganhou" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -18.0
+
+[node name="tema" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -18.0
+
+[node name="Button" type="Button" parent="."]
+margin_left = 496.0
+margin_top = 303.0
+margin_right = 796.0
+margin_bottom = 378.0
+custom_fonts/font = SubResource( 1 )
+text = "REINICIAR"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pontua" from="Player1" to="." method="_on_Player1_pontua"]
+[connection signal="body_entered" from="Player2" to="Player2" method="_on_Player2_body_entered"]
+[connection signal="pontua2" from="Player2" to="." method="_on_Player2_pontua2"]
+[connection signal="timeout" from="tempocarrorapido" to="." method="_on_tempocarrorapido_timeout"]
+[connection signal="timeout" from="tempocarrodevagar" to="." method="_on_tempocarrodevagar_timeout"]
+[connection signal="timeout" from="tempocarrorapido2" to="." method="_on_tempocarrorapido2_timeout"]
+[connection signal="timeout" from="tempocarrodevagar2" to="." method="_on_tempocarrodevagar2_timeout"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
